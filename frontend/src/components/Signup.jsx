@@ -9,13 +9,20 @@ function Signup() {
   const handlesubmit = async (e) => {
     e.preventDefault();
 // api call
-const response = await fetch("http://localhost:5000/api/auth/createuser", { 
+const response = await fetch(
+  "https://anis-drive-app.onrender.com/api/auth/createuser",
+  {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     headers: {
-        "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({name:credentials.name, email: credentials.email, password:credentials.password }), // body data type must match "Content-Type" header
-});
+    body: JSON.stringify({
+      name: credentials.name,
+      email: credentials.email,
+      password: credentials.password,
+    }), // body data type must match "Content-Type" header
+  }
+);
 const json =  await response.json(); 
 if(json.success){
     localStorage.setItem("token" , json.token)

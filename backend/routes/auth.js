@@ -74,7 +74,7 @@ routes.post('/login', [
         id:user.id
       }
     }
-    const token = jwt.sign(data, jwt_sec);
+    const token = await jwt.sign(data, jwt_sec);
     success = true
     res.json({ success ,token})
     
@@ -91,7 +91,7 @@ routes.post('/login', [
 
 routes.post('/getuser',fetchuser, async (req, res ) =>{
   try {
-   const userID = req.user.id; 
+   const userID =await req.user.id; 
    const user = await  User.findById(userID).select("-password")
    res.send(user)
   } catch (error) {

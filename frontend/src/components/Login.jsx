@@ -11,13 +11,19 @@ function Login(){
     const handlesubmit = async (e) => {
         e.preventDefault();
     // api call
-    const response = await fetch("http://localhost:5000/api/auth/login", {
+    const response = await fetch(
+      "https://anis-drive-app.onrender.com/api/auth/login",
+      {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         headers: {
-            "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: credentials.email, password:credentials.password }), // body data type must match "Content-Type" header
-    });
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password,
+        }), // body data type must match "Content-Type" header
+      }
+    );
     const json =  await response.json(); 
     console.log(json)
     if(json.success){
