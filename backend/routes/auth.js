@@ -35,10 +35,7 @@ routes.post('/createuser', [
     //   .catch(err=> { 
     // res.json({error : "Please Enter Valid Input" , message :err.message})})
 const data = {
-  user:{
-    id:user.id
-
-  }
+  user:{id:user.id}
 }
 const token = jwt.sign(data, jwt_sec);
 success = true
@@ -66,7 +63,6 @@ routes.post('/login', [
   try {
     const user =  await User.findOne({email});
     if(!user){
-
       return res.status(400).json({ success ,errors: "Please enter valid  credentails" });
     }
     const compare = await bcrypt.compare(password , user.password)
@@ -95,7 +91,7 @@ routes.post('/login', [
 
 routes.post('/getuser',fetchuser, async (req, res ) =>{
   try {
-   userID = req.user.id; 
+   const userID = req.user.id; 
    const user = await  User.findById(userID).select("-password")
    res.send(user)
   } catch (error) {
