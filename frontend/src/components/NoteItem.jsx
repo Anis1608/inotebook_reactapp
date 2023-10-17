@@ -25,7 +25,7 @@ const NoteItem = (props) => {
                     <h5 className="card-title">{note.title}</h5>
                         <p className="card-text">{note.description}</p>
                         <a href={note.images} target="_blank">
-                    <img style={{ maxHeight: "250px", maxWidth: "150px" }} src={note.images} alt="Image Not Found" / >
+                    <img style={{ maxHeight: "250px", maxWidth: "150px" }} src={note.images} alt="Image Not Found"  />
                         </a>
                     <button className="btn btn-primary mx-2" onClick={() => { deleteNote(note._id) }}>DELETE</button>
                     <button className="btn btn-primary mx-2" onClick={() => { updateNote(note) }}>EDIT</button>
