@@ -5,12 +5,14 @@ import { useHistory  } from 'react-router-dom';
 function Login(){
 
     const [credentials, setCredentials] = useState({email:"" , password:""})
-    let history  = useHistory();
+    let history = useHistory();
+    const [isloading, setIsloading] = useState(false)
      
 
     const handlesubmit = async (e) => {
         e.preventDefault();
-    // api call
+        // api call
+        setIsloading(true)
     const response = await fetch(
       "https://anis-drive-app.onrender.com/api/auth/login",
       {
@@ -18,7 +20,7 @@ function Login(){
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        body: JSON.stringify({ 
           email: credentials.email,
           password: credentials.password,
         }), // body data type must match "Content-Type" header
@@ -29,14 +31,14 @@ function Login(){
     if(json.success){
         localStorage.setItem("token" , json.token)
         history.push('/')
+        setIsloading(false)
        
     }
     else{
         alert("Enter Valid Credentails")
+        setIsloading(false)
     }
     }
-
-
     const handlechange = (e) => {
         setCredentials({...credentials , [e.target.name] : e.target.value})
 
@@ -56,9 +58,13 @@ function Login(){
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                     <input type="password" name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" disabled={isloading} className="btn btn-primary">{isloading ? <div className="d-flex justify-content-center">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div> : "Login" }</button>
             </form>
-        </div>
+            </div>
         </>
     )
 

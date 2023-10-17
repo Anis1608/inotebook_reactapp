@@ -3,8 +3,9 @@ import noteContext from "../context/notes/notecontext";
 
 const AddNote = () => {
   const context = useContext(noteContext);
+  const [isloading, setIsloading] = useState(false)
+  // const [pic, setPic] = useState();
   const { addNote } = context;
-  const [pic, setPic] = useState();
 
 
   const [note, setNote] = useState({
@@ -19,8 +20,9 @@ const AddNote = () => {
       alert("end in first if condition");
       return;
     }
+    setIsloading(true)
     console.log(pics);
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+    if (pics.type === "image/jpeg" || pics.type === "image/png" || pics.type === "image/jpg" || pics.type === "image/WebP") {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "mydrive");
@@ -34,11 +36,14 @@ const AddNote = () => {
           (data.url.toString());
           console.log(data.url.toString());
           localStorage.setItem("link", data.url.toString())
+          setIsloading(false)
         })
         .catch((err) => {
           console.log(err);
+          setIsloading(false)
         });
-    } else {
+      } else {
+      setIsloading(false)
       return;
     }
   };
@@ -49,7 +54,7 @@ const AddNote = () => {
     setNote({ title: "", description: "", tag: "", images: "" });
 
   };
-
+ 
 
   const handlechange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
@@ -58,7 +63,7 @@ const AddNote = () => {
   return (
     <div className="contact-left">
       <div className="contact-messageme">
-        <h1>Message me</h1>
+        <h1>Add Your Notes With Images</h1>
       </div>
       <div className="contact-formcontainer">
         <form action="" method="post" name="myForm" id="myForm">
@@ -103,12 +108,16 @@ const AddNote = () => {
             <br />
             <input
               type="file"
-              name={pic}
-              id={pic}
+              name="images"
+              id="images"
               className="contact-background"
               accept="image/*"
               onChange={(e) => postDetails(e.target.files[0])}
-            />
+            /> {isloading && <div className="d-flex justify-content-center">
+              <div className="spinner-border" role="status">
+              </div>
+            </div>}
+
 
             {/* <input
               type="file"
@@ -123,12 +132,14 @@ const AddNote = () => {
             <br />
             <br />
             <button
-              disabled={note.title.length < 5 || note.description.length < 5}
               type="submit"
               id="sendmessage"
+              className="btn btn-primary"
+              disabled={note.title.length < 5 || note.description.length < 5 || isloading}
+              
               onClick={handleclick}
             >
-              Add Note
+              {isloading ? "Uploading Image" : " Add Note"}
             </button>
           </div>
         </form>

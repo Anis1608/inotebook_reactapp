@@ -1,16 +1,9 @@
-.notebox{
-    display: inline-block;
-    border: 2px solid black;
-    background-color: rgb(183, 181, 181);
-    height: inherit;
-    width: inherit;
-    margin: 20px;
-    min-width: 200px;
-    min-height: 200px;
-}
-.noteitem{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background-color: rgb(210, 210, 210);
+
+.item{
+   height: inherit;
+   width: inherit;
+   min-height: 200px;
+   min-width: 200px;
+   border: 5px solid black;
+   margin: 1em;
 }

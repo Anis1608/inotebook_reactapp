@@ -4,11 +4,13 @@ import { useHistory  } from 'react-router-dom';
 
 
 function Signup() {
+  const [isloading, setIsloading] = useState(false)
   const [credentials, setCredentials] = useState({name:"", email:"" , password:""})
   let history  = useHistory();
   const handlesubmit = async (e) => {
     e.preventDefault();
-// api call
+    // api call
+    setIsloading(true)
 const response = await fetch(
   "https://anis-drive-app.onrender.com/api/auth/createuser",
   {
@@ -26,7 +28,8 @@ const response = await fetch(
 const json =  await response.json(); 
 if(json.success){
     localStorage.setItem("token" , json.token)
-    history.push('/')
+  history.push('/')
+  setIsloading(false)
 }
 
   } 
@@ -54,7 +57,11 @@ if(json.success){
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                     <input type="password" name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" disabled={isloading} className="btn btn-primary">{isloading ? <div className="d-flex justify-content-center">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div> : "Register"}</button>
             </form>
         </div>
    </>
