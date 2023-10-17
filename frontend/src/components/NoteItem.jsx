@@ -14,6 +14,9 @@ const NoteItem = (props) => {
             <p>
                 {note.description}
             </p>
+            <p>
+                {note.images}
+            </p>
             <div>
                 <RiDeleteBinLine style={{ fontSize: "25px", marginLeft: "2px", marginTop: "15px" }} onClick={()=>{deleteNote(note._id)}} />
                 <BiEdit style={{ fontSize: "25px", marginLeft: "15px", marginTop: "15px"}}  onClick={()=>{updateNote(note)}}/>

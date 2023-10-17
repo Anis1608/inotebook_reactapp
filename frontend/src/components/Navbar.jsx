@@ -2,7 +2,6 @@ import React from 'react'
 import "./css/Navbar.css"
 import { useState } from 'react'
 import { Link , useHistory } from 'react-router-dom'
-import logo from './images/logo.jpg'
 
 export default function Navbar() {
     const [Hidden, setHidden] = useState(true)

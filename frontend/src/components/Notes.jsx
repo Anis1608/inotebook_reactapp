@@ -12,7 +12,7 @@ export default function Notes() {
 
     const context = useContext(noteContext)
     const { notes, getNotes , editNote } = context;
-    const [note, setNote] = useState({ id:"" , etitle: "", edescription: "", etag: "" })
+    const [note, setNote] = useState({ id:"" , etitle: "", edescription: "", etag: "" , eimages:""})
     let history  = useHistory();
     useEffect(() => {
         if(localStorage.getItem("token")){
@@ -25,7 +25,13 @@ export default function Notes() {
     }, [])
     const updateNote = (currentNote) => {
         ref.current.click();
-        setNote({id:currentNote._id , etitle: currentNote.title , edescription: currentNote.description , etag: currentNote.tag})
+        setNote({
+          id: currentNote._id,
+          etitle: currentNote.title,
+          edescription: currentNote.description,
+          etag: currentNote.tag,
+          eimages: currentNote.eimages,
+        });
         
     }
     const ref = useRef(null)
@@ -33,7 +39,7 @@ export default function Notes() {
     
     const handleclick = (e) => {
         e.preventDefault();
-        editNote(note.id, note.etitle , note.edescription , note.etag)
+        editNote(note.id, note.etitle , note.edescription , note.etag , note.eimages)
          refclose.current.click();
         // console.log("Updatding note" , note)
         // addNote(note.title , note.description , note.tag)
@@ -68,6 +74,8 @@ export default function Notes() {
                             placeholder="Description" onChange={handlechange}  minLength={5} required></textarea><br /><br />
                         <input type="text"  value={note.etag} name="etag" id="etag" className="contact-background"
                             placeholder="Tag" onChange={handlechange}  /><br /><br />
+                        <input type="file"  value={note.eimages} name="eimages" id="eimages" className="contact-background"
+                            onChange={handlechange}  /><br /><br />
                         <br />
                     </div>
                 </form>
