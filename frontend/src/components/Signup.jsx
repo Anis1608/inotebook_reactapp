@@ -4,6 +4,7 @@ import { useHistory  } from 'react-router-dom';
 
 
 function Signup() {
+  const [show, setShow] = useState(false)
   const [isloading, setIsloading] = useState(false)
   const [credentials, setCredentials] = useState({name:"", email:"" , password:""})
   let history  = useHistory();
@@ -33,13 +34,13 @@ if(json.success){
 }
 
   } 
-
-
-
   const handlechange = (e) => {
     setCredentials({...credentials , [e.target.name] : e.target.value})
 
-}
+  }
+  const handleShow = () => {
+    setShow(!show)
+  }
   return (
    <>
     <div className='container my-3' >
@@ -56,7 +57,10 @@ if(json.success){
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                     <input type="password" name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
-                </div>
+          </div>
+          <div className='mb-3'>
+            <p className='btn' style={{ border: "2px solid" }} onClick={handleShow} >{show ? "Hide Password" : "Show Password"}</p>
+          </div>
           <button type="submit" disabled={isloading} className="btn btn-primary">{isloading ? <div className="d-flex justify-content-center">
             <div className="spinner-border" role="status">
               <span className="visually-hidden">Loading...</span>

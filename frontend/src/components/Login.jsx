@@ -64,7 +64,7 @@ function Login() {
                        
                 </div>
                     <div className='mb-3'>
-                        <p className='btn' style={{border:"2px solid"}} onClick={handleShow} >{ show ? "Show Password" : "Hide Password"}</p>
+                        <p className='btn' style={{border:"2px solid"}} onClick={handleShow} >{ show ? "Hide Password" : "Show Password"}</p>
                 
                        
                         </div>
