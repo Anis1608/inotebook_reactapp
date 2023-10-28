@@ -9,10 +9,9 @@ import { useHistory } from 'react-router-dom';
 
 export default function Notes() {
     const [isloading, setIsloading] = useState(false)
-    const [pic, setPic] = useState();
     const context = useContext(noteContext)
     const { notes, getNotes, editNote } = context;
-    const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "", eimages:""})
+    const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "", eimages:""  ,  epdf:""  ,evideo:""})
     let history = useHistory();
     useEffect(() => {
         if (localStorage.getItem("token")) {
@@ -31,6 +30,8 @@ export default function Notes() {
             edescription: currentNote.description,
             etag: currentNote.tag,
             eimages:currentNote.images,
+            epdf:currentNote.pdf,
+            evideo:currentNote.video,
         });
 
 
@@ -41,11 +42,11 @@ export default function Notes() {
     const handleclick = (e) => {
         e.preventDefault();
          
-            const userResponse = window.confirm("Note updated!  Please Reload Page to Reflect Updated Images ");
+            const userResponse = window.confirm("Note updated!  Please Reload Page to Reflect Changes ");
             if (userResponse) {
                 window.location.reload(); // Reload the page
             }
-        editNote(note.id, note.etitle, note.edescription, note.etag, note.eimages)
+        editNote(note.id, note.etitle, note.edescription, note.etag, note.eimages , note.epdf , note.evideo)
         refclose.current.click();
         // console.log("Updatding note" , note)
         // addNote(note.title , note.description , note.tag)
@@ -55,6 +56,9 @@ export default function Notes() {
         setNote({ ...note, [e.target.name]: e.target.value })
 
     }
+
+
+    // images upload 
     const postDetails = (pics) => {
         if (pics === undefined) {
             alert("end in first if condition");
@@ -73,7 +77,6 @@ export default function Notes() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    setPic(data.url.toString());
                     console.log(data.url.toString());
                     localStorage.setItem("link", data.url.toString())
                     setIsloading(false)
@@ -85,6 +88,76 @@ export default function Notes() {
         } else {
             setIsloading(false)
             return;
+        }
+    };
+
+
+
+    // pdf upload
+    const postPDF = (pdfFile) => {
+        if (pdfFile === undefined) {
+            alert("PDF file not selected.");
+            return;
+        }
+
+        if (pdfFile.type === "application/pdf") {
+            setIsloading(true);
+            const data = new FormData();
+            data.append("file", pdfFile);
+            data.append("upload_preset", "mydrive");
+            data.append("cloud_name", "dgmkwv786");
+
+            fetch("https://api.cloudinary.com/v1_1/dgmkwv786/upload", {
+                method: "post",
+                body: data,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data.url.toString());
+                    localStorage.setItem("pdf", data.url.toString());
+                    setIsloading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setIsloading(false);
+                });
+        } else {
+            alert("Please select a PDF file.");
+        }
+    };
+
+
+
+    // Video upload
+    const postVideo = (video) => {
+        if (video === undefined) {
+            alert("Video file not selected.");
+            return;
+        }
+
+        if (video.type === "video/mp4") {
+            setIsloading(true);
+            const data = new FormData();
+            data.append("file", video);
+            data.append("upload_preset", "mydrive");
+            data.append("cloud_name", "dgmkwv786");
+
+            fetch("https://api.cloudinary.com/v1_1/dgmkwv786/video/upload", {
+                method: "post",
+                body: data,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data.url.toString());
+                    localStorage.setItem("video", data.url.toString());
+                    setIsloading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setIsloading(false);
+                });
+        } else {
+            alert("Please select a video file.");
         }
     };
 
@@ -115,7 +188,18 @@ export default function Notes() {
                                     <input type="file" name="eimages" id="eimages" className="contact-background"
                                         onChange={(e) => {
                                             postDetails(e.target.files[0])
-                                        }} /><br /><br />
+                                        }} />
+                                    <br /><br />
+                                    <input type="file" name="epdf" id="epdf" className="contact-background"
+                                        onChange={(e) => {
+                                            postPDF(e.target.files[0])
+                                        }} />
+                                    <br /><br />
+                                    <input type="file" name="evideo" id="evideo" className="contact-background"
+                                        onChange={(e) => {
+                                            postVideo(e.target.files[0])
+                                        }} />
+                                    <br /><br />
                                     <br />
                                 </div>
                             </form>
@@ -126,7 +210,7 @@ export default function Notes() {
                         </div>}
                         <div className="modal-footer">
                             <button type="button" ref={refclose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" disabled={note.etitle.length < 5 || note.edescription.length < 5 || isloading} onClick={handleclick} className="btn btn-primary"> {isloading ? "Uploading Image" : "Update Note"}</button>
+                            <button type="button" disabled={note.etitle.length < 5 || note.edescription.length < 5 || isloading} onClick={handleclick} className="btn btn-primary"> {isloading ? "Uploading Changes" : "Update Note "}</button>
                             
                         </div>
                     </div>

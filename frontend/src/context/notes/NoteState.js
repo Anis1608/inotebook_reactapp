@@ -26,7 +26,7 @@ const NoteState = (props) => {
 
   // add note
 
-  const addNote = async (title, description, tag , images) => {
+  const addNote = async (title, description, tag , images , pdf) => {
     // api call
     const response = await fetch(`${host}api/notes/addnote`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -34,7 +34,7 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         token: localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag, images:localStorage.getItem("link") }), 
+      body: JSON.stringify({ title, description, tag, images:localStorage.getItem("link") , pdf:localStorage.getItem("pdf") }), 
       // body data type must match "Content-Type" header
     });
     const note = await response.json();
@@ -42,6 +42,9 @@ const NoteState = (props) => {
     setNotes(notes.concat(note));
     setTimeout(() => { 
       localStorage.removeItem("link")
+    }, 3000);
+    setTimeout(() => { 
+      localStorage.removeItem("pdf")
     }, 3000);
   };
 

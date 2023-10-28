@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import { RiDeleteBinLine } from "react-icons/ri"
-import { BiEdit } from "react-icons/bi"
 import noteContext from "../context/notes/notecontext";
 const NoteItem = (props) => {
 
@@ -24,9 +22,41 @@ const NoteItem = (props) => {
                 <div className="card-body">
                     <h5 className="card-title">{note.title}</h5>
                         <p className="card-text">{note.description}</p>
-                        <a href={note.images} target="_blank">
-                    <img style={{ maxHeight: "250px", maxWidth: "150px" }} src={note.images} alt="Image Not Found"  />
+
+
+                        <a href={note.images} target="_blank" rel="noreferrer" >
+                            {note.images ? (  
+                                <img style={{ maxHeight: "250px", maxWidth: "150px" }} src={note.images} alt="Images not uploaded"  />
+                            ) : (
+                                    ""
+                            )
+                        }
                         </a>
+
+
+                        <br />
+                        <br />
+
+                        <a href={note.pdf ? note.pdf : '#'} target="_blank" rel="noreferrer" >
+                            {note.pdf ? (
+                                <img style={{ maxHeight: "100px", maxWidth: "100px" }} src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png" alt="PDF not uploaded" />
+                            ) : (
+                                ""
+                            )}
+                        </a>
+
+                        <a href={note.video ? note.video : '#'} target="_blank" rel="noreferrer" >
+                            {note.pdf ? (
+                                <video>
+                                <source style={{ maxHeight: "400px", maxWidth: "400px" }} src={note.video} />
+                                </video>
+                            ) : (
+                                ""
+                            )}
+                        </a>
+
+                        <br />
+
                     <button className="btn btn-primary mx-2" onClick={() => { deleteNote(note._id) }}>DELETE</button>
                     <button className="btn btn-primary mx-2" onClick={() => { updateNote(note) }}>EDIT</button>
                 </div>

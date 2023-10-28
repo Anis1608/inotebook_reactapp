@@ -26,13 +26,13 @@ routes.post('/addnote', fetchuser, [
 ], async (req, res) => {
     try {
 
-        const { title, description, tag , images } = req.body
+        const { title, description, tag , images ,pdf , video } = req.body
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
         const note = new Notes({
-            title, description, tag, images, user: req.user.id
+            title, description, tag, images, pdf , video ,   user: req.user.id
 
         })
         const saveNote = await note.save()
@@ -48,13 +48,15 @@ routes.post('/addnote', fetchuser, [
 
 
 routes.put('/updatenote/:id', fetchuser, async (req, res) => {
-    const { title, description, tag , images } = req.body;
+    const { title, description, tag , images , pdf   ,video} = req.body;
     const newNote = {}
 
     if (title) { newNote.title = title };
     if (description) { newNote.description = description };
     if (tag) { newNote.tag = tag };
     if (images) { newNote.images = images };
+    if (pdf) { newNote.pdf = pdf };
+    if (video) { newNote.video = video };
 
     let note = await Notes.findById(req.params.id)
     if (!note) {

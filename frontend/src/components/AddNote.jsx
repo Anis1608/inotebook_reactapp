@@ -13,6 +13,8 @@ const AddNote = () => {
     description: "",
     tag: "",
     images: "",
+    pdf: "",
+    video:"",
   });
 
   const postDetails = (pics) => {
@@ -48,11 +50,89 @@ const AddNote = () => {
     }
   };
 
+
+
+
+  // pdf upload
+  const postPDF = (pdfFile) => {
+    if (pdfFile === undefined) {
+      alert("PDF file not selected.");
+      return;
+    }
+
+    if (pdfFile.type === "application/pdf") {
+      setIsloading(true);
+      const data = new FormData();
+      data.append("file", pdfFile);
+      data.append("upload_preset", "mydrive");
+      data.append("cloud_name", "dgmkwv786");
+
+      fetch("https://api.cloudinary.com/v1_1/dgmkwv786/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.url.toString());
+          localStorage.setItem("pdf", data.url.toString());
+          setIsloading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsloading(false);
+        });
+    } else {
+      alert("Please select a PDF file.");
+    }
+  };
+
+
+
+  // Video upload
+  const postVideo = (video) => {
+    if (video === undefined) {
+      alert("Video file not selected.");
+      return;
+    }
+
+    if (video.type === "video/mp4") {
+      setIsloading(true);
+      const data = new FormData();
+      data.append("file", video);
+      data.append("upload_preset", "mydrive");
+      data.append("cloud_name", "dgmkwv786");
+
+      fetch("https://api.cloudinary.com/v1_1/dgmkwv786/video/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.url.toString());
+          localStorage.setItem("video", data.url.toString());
+          setIsloading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsloading(false);
+        });
+    } else {
+      alert("Please select a video file.");
+    }
+  };
+
+
+
+
+
+
   const handleclick = (e) => {
     e.preventDefault();
-    addNote(note.title, note.description, note.tag, note.images);
-    setNote({ title: "", description: "", tag: "", images: "" });
+    addNote(note.title, note.description, note.tag, note.images , note.pdf , note.video);
+    setNote({ title: "", description: "", tag: "", images: "", pdf: "" , video:"" });
     document.getElementById("images").value = "";
+    document.getElementById("pdf").value = "";
+    document.getElementById("video").value = "";
 
   };
  
@@ -114,21 +194,31 @@ const AddNote = () => {
               className="contact-background"
               accept="image/*"
               onChange={(e) => postDetails(e.target.files[0])}
-            /> {isloading && <div className="d-flex justify-content-center">
+            /> <br />
+            <br />
+            <input
+              type="file"
+              name="pdf"
+              id="pdf"
+              className="contact-background"
+              accept="application/pdf"
+              onChange={(e) => postPDF(e.target.files[0])}
+            />
+            <br />
+            <br />
+            <input
+              type="file"
+              name="video"
+              id="video"
+              className="contact-background"
+              accept="video/*"
+              onChange={(e) => postVideo(e.target.files[0])}
+            />
+
+            {isloading && <div className="d-flex justify-content-center">
               <div className="spinner-border" role="status">
               </div>
             </div>}
-
-
-            {/* <input
-              type="file"
-              name="images"
-              id="images"
-              className="contact-background"
-              accept="image/*"
-              value={note.images}
-              onChange={(e) => postDetails(e.target.files[0])}
-            /> */}
             <br />
             <br />
             <br />
@@ -137,10 +227,9 @@ const AddNote = () => {
               id="sendmessage"
               className="btn btn-primary"
               disabled={note.title.length < 5 || note.description.length < 5 || isloading}
-              
               onClick={handleclick}
             >
-              {isloading ? "Uploading Image" : " Add Note"}
+              {isloading ? "Uploading Please Wait" : " Add Your Note "}
             </button>
           </div>
         </form>
