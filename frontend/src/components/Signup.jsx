@@ -56,7 +56,7 @@ if(json.success){
                 </div>
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                    <input type="password" name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
+            <input type={show ? "text" : "password"} name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
           </div>
           <div className='mb-3'>
             <p className='btn' style={{ border: "2px solid" }} onClick={handleShow} >{show ? "Hide Password" : "Show Password"}</p>
