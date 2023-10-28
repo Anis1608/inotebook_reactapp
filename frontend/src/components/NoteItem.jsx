@@ -37,7 +37,7 @@ const NoteItem = (props) => {
                         <br />
                         <br />
 
-                        <a href={note.pdf ? note.pdf : '#'} target="_blank" rel="noreferrer" >
+                        <a href={note.pdf} target="_blank" rel="noreferrer" >
                             {note.pdf ? (
                                 <img style={{ maxHeight: "100px", maxWidth: "100px" }} src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png" alt="PDF not uploaded" />
                             ) : (
@@ -45,7 +45,7 @@ const NoteItem = (props) => {
                             )}
                         </a>
 
-                        <a href={note.video ? note.video : '#'} target="_blank" rel="noreferrer" >
+                        <a href={note.video} target="_blank" rel="noreferrer" >
                             {note.pdf ? (
                                 <video>
                                 <source style={{ maxHeight: "400px", maxWidth: "400px" }} src={note.video} />
