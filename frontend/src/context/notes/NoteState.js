@@ -26,7 +26,7 @@ const NoteState = (props) => {
 
   // add note
 
-  const addNote = async (title, description, tag , images , pdf) => {
+  const addNote = async (title, description, tag , images , pdf  , video) => {
     // api call
     const response = await fetch(`${host}api/notes/addnote`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -34,7 +34,7 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         token: localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag, images:localStorage.getItem("link") , pdf:localStorage.getItem("pdf") }), 
+      body: JSON.stringify({ title, description, tag, images:localStorage.getItem("link") , pdf:localStorage.getItem("pdf") , video:localStorage.getItem("video") }), 
       // body data type must match "Content-Type" header
     });
     const note = await response.json();
@@ -45,6 +45,9 @@ const NoteState = (props) => {
     }, 3000);
     setTimeout(() => { 
       localStorage.removeItem("pdf")
+    }, 3000);
+    setTimeout(() => { 
+      localStorage.removeItem("video")
     }, 3000);
   };
 
@@ -69,7 +72,7 @@ const NoteState = (props) => {
   };
   // edit note
 
-  const editNote = async (id, title, description, tag, images) => {
+  const editNote = async (id, title, description, tag, images , pdf ,  video) => {
     // api call
     const response = await fetch(`${host}api/notes/updatenote/${id}`, {
       method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -77,7 +80,7 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         token: localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag , images:localStorage.getItem("link") }), // body data type must match "Content-Type" header
+      body: JSON.stringify({ title, description, tag , images:localStorage.getItem("link") , pdf:localStorage.getItem("pdf")  , video:localStorage.getItem("video") }), // body data type must match "Content-Type" header
     });
     const json = await response.json(); // parses JSON response into native JavaScript objects
 
@@ -90,12 +93,20 @@ const NoteState = (props) => {
         newNotes[index].description = description;
         newNotes[index].tag = tag;
         newNotes[index].images = images;
+        newNotes[index].pdf = pdf;
+        newNotes[index].video = video;
         break;
       } 
     }
     setNotes(newNotes);
      setTimeout(() => { 
       localStorage.removeItem("link")
+    }, 3000);
+     setTimeout(() => { 
+      localStorage.removeItem("pdf")
+    }, 3000);
+     setTimeout(() => { 
+      localStorage.removeItem("video")
     }, 3000);
   };
 

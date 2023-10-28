@@ -185,17 +185,17 @@ export default function Notes() {
                                         placeholder="Description" onChange={handlechange} minLength={5} required></textarea><br /><br />
                                     <input type="text" value={note.etag} name="etag" id="etag" className="contact-background"
                                         placeholder="Tag" onChange={handlechange} /><br /><br />
-                                    <input type="file" name="eimages" id="eimages" className="contact-background"
+                                    <input type="file" accept='image/*' name="eimages" id="eimages" className="contact-background"
                                         onChange={(e) => {
                                             postDetails(e.target.files[0])
                                         }} />
                                     <br /><br />
-                                    <input type="file" name="epdf" id="epdf" className="contact-background"
+                                    <input type="file" accept='application/pdf' name="epdf" id="epdf" className="contact-background"
                                         onChange={(e) => {
                                             postPDF(e.target.files[0])
                                         }} />
                                     <br /><br />
-                                    <input type="file" name="evideo" id="evideo" className="contact-background"
+                                    <input type="file" accept='video/*' name="evideo" id="evideo" className="contact-background"
                                         onChange={(e) => {
                                             postVideo(e.target.files[0])
                                         }} />

@@ -32,7 +32,7 @@ routes.post('/addnote', fetchuser, [
             return res.status(400).json({ errors: errors.array() });
         }
         const note = new Notes({
-            title, description, tag, images, pdf , video ,   user: req.user.id
+            title, description, tag, images, pdf , video ,user: req.user.id
 
         })
         const saveNote = await note.save()
@@ -69,6 +69,8 @@ routes.put('/updatenote/:id', fetchuser, async (req, res) => {
     note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
     res.send({ note })
 })
+
+
 // delete the notes put
 
 
