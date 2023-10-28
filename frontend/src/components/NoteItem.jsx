@@ -45,9 +45,12 @@ const NoteItem = (props) => {
                             )}
                         </a>
 
+                        <br />
+                        <br />
+
                         <a href={note.video} target="_blank" rel="noreferrer" >
                             {note.pdf ? (
-                                <video style={{ maxHeight: "400px", maxWidth: "400px" }} controls>
+                                <video width="100%" height="auto" controls>
                                 <source src={note.video} />
                                 </video>
                             ) : (
