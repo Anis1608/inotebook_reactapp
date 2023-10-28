@@ -2,7 +2,8 @@ import React from 'react'
 import { useState  } from 'react';
 import { useHistory  } from 'react-router-dom';
 
-function Login(){
+function Login() {
+    const [show, setShow] = useState(false)
 
     const [credentials, setCredentials] = useState({email:"" , password:""})
     let history = useHistory();
@@ -43,6 +44,9 @@ function Login(){
         setCredentials({...credentials , [e.target.name] : e.target.value})
 
     }
+    const handleShow = () => {
+        setShow(!show)
+    }
 
 
     return (
@@ -56,8 +60,14 @@ function Login(){
                 </div>
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                    <input type="password" name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
+                        <input type={show ? "text" : "password"} name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
+                       
                 </div>
+                    <div className='mb-3'>
+                        <p className='btn' style={{border:"2px solid"}} onClick={handleShow} >{ show ? "Show Password" : "Hide Password"}</p>
+                
+                       
+                        </div>
                     <button type="submit" disabled={isloading} className="btn btn-primary">{isloading ? <div className="d-flex justify-content-center">
                         <div className="spinner-border" role="status">
                             <span className="visually-hidden">Loading...</span>

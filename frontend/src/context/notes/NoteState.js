@@ -2,6 +2,7 @@ import React from "react";
 import NoteContext from "./notecontext";
 import { useState } from "react";
 
+
 const NoteState = (props) => {
   const host = "https://anis-drive-app.onrender.com/";
   const notesInitial = [];
@@ -25,7 +26,7 @@ const NoteState = (props) => {
 
   // add note
 
-  const addNote = async (title, description, tag, images) => {
+  const addNote = async (title, description, tag , images) => {
     // api call
     const response = await fetch(`${host}api/notes/addnote`, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -33,10 +34,15 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         token: localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag, images }), // body data type must match "Content-Type" header
+      body: JSON.stringify({ title, description, tag, images:localStorage.getItem("link") }), 
+      // body data type must match "Content-Type" header
     });
     const note = await response.json();
+    console.log(note);
     setNotes(notes.concat(note));
+    setTimeout(() => { 
+      localStorage.removeItem("link")
+    }, 3000);
   };
 
   // delete note
@@ -68,7 +74,7 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         token: localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag }), // body data type must match "Content-Type" header
+      body: JSON.stringify({ title, description, tag , images:localStorage.getItem("link") }), // body data type must match "Content-Type" header
     });
     const json = await response.json(); // parses JSON response into native JavaScript objects
 
@@ -82,9 +88,12 @@ const NoteState = (props) => {
         newNotes[index].tag = tag;
         newNotes[index].images = images;
         break;
-      }
+      } 
     }
     setNotes(newNotes);
+     setTimeout(() => { 
+      localStorage.removeItem("link")
+    }, 3000);
   };
 
   return (

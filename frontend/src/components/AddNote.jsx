@@ -12,7 +12,7 @@ const AddNote = () => {
     title: "",
     description: "",
     tag: "",
-    images: localStorage.getItem("link"),
+    images: "",
   });
 
   const postDetails = (pics) => {
@@ -52,6 +52,7 @@ const AddNote = () => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag, note.images);
     setNote({ title: "", description: "", tag: "", images: "" });
+    document.getElementById("images").value = "";
 
   };
  

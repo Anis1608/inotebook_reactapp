@@ -9,7 +9,13 @@ const NODE_ENV = "production";
 app.use(express.json());
 app.use("/api/auth/", require("./routes/auth"));
 app.use("/api/notes/", require("./routes/notes"));
+app.use("/api/image/", require("./routes/image"));
 
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
+
+mongo();
 const __dirname1 = path.resolve();
 if (NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname1, "/frontend/build")));
@@ -21,9 +27,3 @@ if (NODE_ENV === "production") {
     res.send("Hello World!");
   });
 }
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
-mongo();

@@ -5,10 +5,12 @@ import NoteState from './context/notes/NoteState';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import {BrowserRouter as Router,Switch,Route,} from "react-router-dom";
+import ImageUpload from './components/Image';
 
 function App() {
   return (
     <>
+      {/* <ImageUpload/> */}
     <NoteState>
     <Router>
     <Navbar/>

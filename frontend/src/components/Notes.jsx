@@ -9,10 +9,10 @@ import { useHistory } from 'react-router-dom';
 
 export default function Notes() {
     const [isloading, setIsloading] = useState(false)
-    // const [pic, setPic] = useState();
+    const [pic, setPic] = useState();
     const context = useContext(noteContext)
     const { notes, getNotes, editNote } = context;
-    const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "", eimages: localStorage.getItem("link") })
+    const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "", eimages:""})
     let history = useHistory();
     useEffect(() => {
         if (localStorage.getItem("token")) {
@@ -30,8 +30,9 @@ export default function Notes() {
             etitle: currentNote.title,
             edescription: currentNote.description,
             etag: currentNote.tag,
-            eimages: localStorage.getItem("link"),
+            eimages:currentNote.images,
         });
+
 
     }
     const ref = useRef(null)
@@ -39,6 +40,11 @@ export default function Notes() {
 
     const handleclick = (e) => {
         e.preventDefault();
+         
+            const userResponse = window.confirm("Note updated!  Please Reload Page to Reflect Updated Images ");
+            if (userResponse) {
+                window.location.reload(); // Reload the page
+            }
         editNote(note.id, note.etitle, note.edescription, note.etag, note.eimages)
         refclose.current.click();
         // console.log("Updatding note" , note)
@@ -67,7 +73,7 @@ export default function Notes() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    (data.url.toString());
+                    setPic(data.url.toString());
                     console.log(data.url.toString());
                     localStorage.setItem("link", data.url.toString())
                     setIsloading(false)
@@ -107,17 +113,21 @@ export default function Notes() {
                                     <input type="text" value={note.etag} name="etag" id="etag" className="contact-background"
                                         placeholder="Tag" onChange={handlechange} /><br /><br />
                                     <input type="file" name="eimages" id="eimages" className="contact-background"
-                                        onChange={handlechange} /><br /><br />
+                                        onChange={(e) => {
+                                            postDetails(e.target.files[0])
+                                        }} /><br /><br />
                                     <br />
                                 </div>
                             </form>
                         </div>
+                        {isloading && <div className="d-flex justify-content-center">
+                            <div className="spinner-border" role="status">
+                            </div>
+                        </div>}
                         <div className="modal-footer">
                             <button type="button" ref={refclose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" disabled={note.etitle.length < 5 || note.edescription.length < 5 || isloading} onClick={handleclick} className="btn btn-primary">{ isloading && <div className="d-flex justify-content-center">
-                                <div className="spinner-border" role="status">
-                                </div>
-                            </div>}</button>
+                            <button type="button" disabled={note.etitle.length < 5 || note.edescription.length < 5 || isloading} onClick={handleclick} className="btn btn-primary"> {isloading ? "Uploading Image" : "Update Note"}</button>
+                            
                         </div>
                     </div>
                 </div>
