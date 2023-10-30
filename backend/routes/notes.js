@@ -16,6 +16,41 @@ routes.get('/fetchallnotes', fetchuser, async (req, res) => {
     }
 })
 
+// fetch all video
+
+routes.get('/fetchallvideo', fetchuser, async (req, res) => {
+    try {
+        const notes = await Notes.find({ user: req.user.id ,  video: { $exists: true, $ne: null }  }).select("video").select("date");
+        res.json(notes) 
+    } catch (error) {
+        console.log(error.message)
+        res.status(5000).send("Some Error occured")
+    }
+})
+
+// fetch all Images
+
+routes.get('/fetchallimages', fetchuser, async (req, res) => {
+    try {
+        const notes = await Notes.find({ user: req.user.id ,  images: { $exists: true, $ne: null }  }).select("images").select("date");
+        res.json(notes) 
+    } catch (error) {
+        console.log(error.message)
+        res.status(5000).send("Some Error occured")
+    }
+})
+// fetch all pdf
+
+routes.get('/fetchallpdf', fetchuser, async (req, res) => {
+    try {
+        const notes = await Notes.find({ user: req.user.id ,  pdf: { $exists: true, $ne: null }  }).select("pdf").select("date");
+        res.json(notes) 
+    } catch (error) {
+        console.log(error.message)
+        res.status(5000).send("Some Error occured")
+    }
+})
+
 
 // addnote  [post]
 

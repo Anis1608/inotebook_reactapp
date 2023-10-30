@@ -24,6 +24,49 @@ const NoteState = (props) => {
     setNotes(json);
   };
 
+  // fetch all video
+  const getVideo = async () => {
+    // api call
+    const response = await fetch(`${host}api/notes/fetchallvideo`, {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    // console.log(json)
+    setNotes(json);
+  };
+  // fetch all Images
+  const getImages = async () => {
+    // api call
+    const response = await fetch(`${host}api/notes/fetchallimages`, {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    // console.log(json)
+    setNotes(json);
+  };
+  // fetch all pdf
+  const getPDF = async () => {
+    // api call
+    const response = await fetch(`${host}api/notes/fetchallpdf`, {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    // console.log(json)
+    setNotes(json);
+  };
+
   // add note
 
   const addNote = async (title, description, tag , images , pdf  , video) => {
@@ -101,18 +144,18 @@ const NoteState = (props) => {
     setNotes(newNotes);
      setTimeout(() => { 
       localStorage.removeItem("link")
-    }, 3000);
+    }, 300);
      setTimeout(() => { 
       localStorage.removeItem("pdf")
-    }, 3000);
+    }, 300);
      setTimeout(() => { 
       localStorage.removeItem("video")
-    }, 3000);
+    }, 300);
   };
 
   return (
     <NoteContext.Provider
-      value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes }}
+      value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes , getVideo  , getImages , getPDF}}
     >
       {props.children}
     </NoteContext.Provider>

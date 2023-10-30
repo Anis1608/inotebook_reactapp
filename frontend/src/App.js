@@ -4,8 +4,10 @@ import Navbar from './components/Navbar';
 import NoteState from './context/notes/NoteState';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Video from './components/Video';
 import {BrowserRouter as Router,Switch,Route,} from "react-router-dom";
-import ImageUpload from './components/Image';
+import Images from './components/Images';
+import Pdfcollection from './components/Pdfcollection';
 
 function App() {
   return (
@@ -17,6 +19,15 @@ function App() {
       <Switch>
         <Route path="/about">
           <About/> 
+        </Route>
+        <Route path="/video">
+          <Video/> 
+        </Route>
+        <Route path="/images">
+          <Images/> 
+        </Route>
+        <Route path="/pdf">
+          <Pdfcollection/>
         </Route>
         <Route path="/login">
           <Login/> 

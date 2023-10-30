@@ -41,11 +41,7 @@ export default function Notes() {
 
     const handleclick = (e) => {
         e.preventDefault();
-         
-            const userResponse = window.confirm("Note updated!  Please Reload Page to Reflect Changes ");
-            if (userResponse) {
-                window.location.reload(); // Reload the page
-            }
+       window.confirm("Note updated!  Please Reload Page to Reflect Changes ");
         editNote(note.id, note.etitle, note.edescription, note.etag, note.eimages , note.epdf , note.evideo)
         refclose.current.click();
         // console.log("Updatding note" , note)
