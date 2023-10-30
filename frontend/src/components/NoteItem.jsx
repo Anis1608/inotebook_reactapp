@@ -11,10 +11,14 @@ const NoteItem = (props) => {
         return new Date(date).toLocaleDateString(undefined, options);
     }
 
-    const openPDFInNewWindow = (e) => {
-        e.preventDefault(); // Prevent the default behavior of opening the link
+    const openPDFLink = () => {
         if (note.pdf) {
-            window.open(note.pdf, '_blank');
+            const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                window.location.href = note.pdf; // Directly open PDF link on mobile devices
+            } else {
+                window.open(note.pdf, '_blank'); // Open in a new window on non-mobile devices
+            }
         }
     }
 
@@ -39,13 +43,14 @@ const NoteItem = (props) => {
                     <br />
                     <br />
 
-                    <a href={note.pdf} onClick={openPDFInNewWindow}>
-                        {note.pdf ? (
-                            <img style={{ cursor: 'pointer', maxHeight: "100px", maxWidth: "100px" }} src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png" alt="PDF not uploaded" />
-                        ) : (
-                            ""
-                        )}
-                    </a>
+
+                    {note.pdf ? (
+                        <button className="btn btn-primary" onClick={openPDFLink}>
+                            
+                        </button>
+                    ) : (
+                        ""
+                    )}
 
                     <br />
                     <br />
