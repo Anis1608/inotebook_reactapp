@@ -7,7 +7,7 @@ import Login from './components/Login';
 import Video from './components/Video';
 import {BrowserRouter as Router,Switch,Route,} from "react-router-dom";
 import Images from './components/Images';
-import Pdfcollection from './components/Pdfcollection';
+import Pdfcollection from './components/Pdfcollection'; 
 
 function App() {
   return (
