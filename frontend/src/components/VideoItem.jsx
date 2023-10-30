@@ -15,19 +15,21 @@ const VideoItem = (props) => {
 
             <div className='item' style={{height:"auto" , maxWidth:"100%"}}>
                         <a href={note.video} target="_blank" rel="noreferrer" >
-                            {note.pdf ? (
+                            {note.video ? (
                                 <video width="100%" height="auto" controls>
-                                    <source src={note.video} />
-                                </video>
+                            <source src={note.video} />
+                        </video>
+                     
                             ) : (
                                 ""
                             )}
-                        </a>
+                </a>
 
                         <br />
-                    </div>
+            
                     <div className="card-footer text-muted">
-                        Created At : {formateDate(note.date)}
+                       Uploaded On : {formateDate(note.date)}
+                    </div>
                     </div>
         </>
     )

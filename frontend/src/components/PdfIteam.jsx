@@ -23,9 +23,9 @@ const PdfIteam = (props) => {
                 </a>
 
                 <br />
-            </div>
             <div className="card-footer text-muted">
-                Created At : {formateDate(note.date)}
+                Uploaded On : {formateDate(note.date)}
+            </div>
             </div>
         </>
     )
