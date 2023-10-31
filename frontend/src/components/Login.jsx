@@ -28,7 +28,7 @@ function Login() {
       }
     );
     const json =  await response.json(); 
-    console.log(json)
+    // console.log(json)
     if(json.success){
         localStorage.setItem("token" , json.token)
         history.push('/')
@@ -38,7 +38,8 @@ function Login() {
     else{
         alert("Enter Valid Credentails")
         setIsloading(false)
-    }
+        }
+        window.location.reload();
     }
     const handlechange = (e) => {
         setCredentials({...credentials , [e.target.name] : e.target.value})
