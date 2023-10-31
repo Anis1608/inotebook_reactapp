@@ -11,7 +11,7 @@ const NoteItem = (props) => {
         return new Date(date).toLocaleDateString(undefined, options);
     }
 
-    const openPDFLink = () => {
+     const openPDFLink = () => {
         if (note.pdf) {
             const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             if (isMobile) {
@@ -21,6 +21,20 @@ const NoteItem = (props) => {
             }
         }
     }
+
+
+    const handleDownloadPDF = () => {
+        // Replace 'your_pdf_file.pdf' with the actual path to your PDF file.
+        const pdfFile = note.pdf;
+
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = pdfFile;
+        link.download = pdfFile.split('/').pop(); // Sets the default download filename
+
+        // Trigger a click event on the link to start the download
+        link.click();
+    };
 
     return (
         <div className='item'>
@@ -38,16 +52,14 @@ const NoteItem = (props) => {
                         ) : (
                             ""
                         )}
-                    </a>
+                    </a> 
 
                     <br />
                     <br />
 
 
                     {note.pdf ? (
-                        <button className="btn btn-primary" onClick={openPDFLink}>
-                            
-                        </button>
+                        <button onClick={handleDownloadPDF}>Download PDF</button>
                     ) : (
                         ""
                     )}
