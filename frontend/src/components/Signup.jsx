@@ -15,7 +15,7 @@ function Signup() {
     // api call
     setIsloading(true)
 const response = await fetch(
-  "http://localhost:5000/api/auth/createuser",
+  "https://anis-drive-app.onrender.com/api/auth/createuser",
   {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     headers: {
