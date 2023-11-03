@@ -15,7 +15,7 @@ function Signup() {
     // api call
     setIsloading(true)
 const response = await fetch(
-  "http://localhost:5000/api/auth/createuser",
+  "https://anis-drive-app.onrender.com/api/auth/createuser",
   {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     headers: {
@@ -59,7 +59,7 @@ else {
   const handleSendOTP = async () => {
     openotpmodal.current.click();
     setIsloadingotp(true)
-    const response = await fetch("http://localhost:5000/api/auth/sendotp", {
+    const response = await fetch("https://anis-drive-app.onrender.com/api/auth/sendotp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
