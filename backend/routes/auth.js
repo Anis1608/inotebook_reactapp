@@ -19,16 +19,20 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+function generateRandom6DigitNumber() {
+  const min = 100000; // Smallest 6-digit number
+  const max = 999999; // Largest 6-digit number
+  const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  return randomNumber;
+}
+
 let sharedOTP = "";
 
 
 routes.post("/sendotp", async (req, res) => {
   const email = req.body.email;
-  const otp = otpgenerator.generate(6, {
-    integer: true,
-    alphabets: false,
-    specialChars: false,
-  });
+  const otp = generateRandom6DigitNumber().toString()
+  // console.log(otp);
     sharedOTP = otp;
   try {
     // Send the OTP to the user's email
@@ -75,8 +79,9 @@ routes.post('/createuser', [
      const email = req.body.email;
       const providedOTP = req.body.otp;
 
-      // Generate the OTP for the provided email (matching the one sent)
-         const otp = sharedOTP;
+      //  (matching the one sent)
+    const otp = sharedOTP;
+    // console.log(sharedOTP);
 
       if (providedOTP !== otp) {
         return res.status(400).json({ success, message: "Invalid OTP" });

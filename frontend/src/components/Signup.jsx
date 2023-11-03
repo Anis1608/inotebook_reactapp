@@ -15,7 +15,7 @@ function Signup() {
     // api call
     setIsloading(true)
 const response = await fetch(
-  "https://anis-drive-app.onrender.com/api/auth/createuser",
+  "http://localhost:5000/api/auth/createuser",
   {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     headers: {
@@ -37,7 +37,12 @@ if(json.success){
   setIsloading(false)
   // closeotpmodal.current.click();
   window.location.reload();
-}
+    }
+else {
+  alert('Invalid OTP')
+  setIsloading(false)
+
+    }
 
   } 
   const handlechange = (e) => {
@@ -54,7 +59,7 @@ if(json.success){
   const handleSendOTP = async () => {
     openotpmodal.current.click();
     setIsloadingotp(true)
-    const response = await fetch("https://anis-drive-app.onrender.com/api/auth/sendotp", {
+    const response = await fetch("http://localhost:5000/api/auth/sendotp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -185,8 +190,7 @@ if(json.success){
                 </div>) }
                 <label htmlFor="exampleInputusername" className="form-label" >Enter OTP</label>
               <input
-                style={{ color: "black", outline: "none" }}
-                type="text"
+                type="number"
                 name="otp"
                 placeholder="OTP"
                 value={credentials.otp}
