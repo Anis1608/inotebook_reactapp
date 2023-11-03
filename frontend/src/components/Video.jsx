@@ -23,7 +23,7 @@ export default function Video() {
         <> 
                 <h1 style={{ margin: "15px" }}>Your Videos</h1>
             <div style={{ display: "flex", flexWrap: "wrap", margin: "10px" }}>
-                {notes.length === 0 && "No Note To Display"}
+                {notes.length === 0 && "No Video's To Display"}
                 {notes.map((note) => {
                     return <VideoItem  key={note._id} note={note} />
                 })}

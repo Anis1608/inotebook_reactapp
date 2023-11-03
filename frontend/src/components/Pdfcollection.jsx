@@ -21,9 +21,9 @@ export default function Images() {
     }, [])
     return (
         <>
-            <h1 style={{ margin: "15px" }}>Your Videos</h1>
+            <h1 style={{ margin: "15px" }}>Your PDF'S</h1>
             <div style={{ display: "flex", flexWrap: "wrap", margin: "10px" }}>
-                {notes.length === 0 && "No Note To Display"}
+                {notes.length === 0 && "No PDF's To Display"}
                 {notes.map((note) => {
                     return <PdfIteam key={note._id} note={note} />
                 })}

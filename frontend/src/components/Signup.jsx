@@ -54,7 +54,7 @@ if(json.success){
   const handleSendOTP = async () => {
     openotpmodal.current.click();
     setIsloadingotp(true)
-    const response = await fetch("http://localhost:5000/api/auth/sendotp", {
+    const response = await fetch("https://anis-drive-app.onrender.com/api/auth/sendotp", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
