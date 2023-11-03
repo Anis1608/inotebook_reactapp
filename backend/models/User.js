@@ -19,6 +19,14 @@ const blogSchema = new Schema({
         require: true
 
     },
+    profile:{
+        type : String,
+        require: true
+
+    },
+    otp: {
+         type : String
+    },
     date:{
         type : Date,
         default : Date.now

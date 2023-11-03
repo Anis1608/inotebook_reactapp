@@ -7,7 +7,7 @@ const AuthState = (props) => {
   const [credentials, setCredentials] = useState(credentialsinitial);
 
    const getUser = async () => {
-     const response = await fetch(${host}/api/auth/getuser, {
+     const response = await fetch("http://localhost:5000/api/auth/getuser", {
        method: "GET",
        headers: {
          "Content-Type": "application/json",
