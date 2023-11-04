@@ -112,7 +112,7 @@ routes.post('/createuser', [
         name: req.body.name,
         email: req.body.email,
         password: secPass,
-        profile: localStorage.getItem("profile"),
+        profile:req.body.profile,
       })
 
     //   .then(user => res.json(user))
