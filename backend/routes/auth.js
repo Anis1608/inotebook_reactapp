@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwt_sec = "Aniskhan1234"
 const nodemailer = require("nodemailer")
-const otpgenerator = require("otp-generator")
+// const otpgenerator = require("otp-generator")
 
 
 
@@ -40,9 +40,20 @@ routes.post("/sendotp", async (req, res) => {
       from: "anisk8161@gmail.com",
       to: email,
       subject: "Email Verification OTP",
-      text:` Your OTP for email verification is: ${otp}`,
+      // text: ` Your OTP for email verification is: ${otp}`,
+      html:`<p style="font-size: 16px; color: #333;">Dear User,</p>
+      <h3>Your OTP for email verification is :</h3>
+      <div style={{display:"flex" , justifyContent:"center" , alignItems:"center"}}><h1 style={{fontSize:"60px"}}>${otp}</h1></div><br />
+      <p style="font-size: 14px; color: #777;">Thank you for using our service.</p>`
+//    attachments: [
+  // {
+    //   filename: 'Anis.jpg', // Change the filename to the desired name
+    //   path: 'http://res.cloudinary.com/dgmkwv786/image/upload/v1699028509/gpdu82jfrgsavbhkhav1.jpg' // URL to your image
+    // }
+  // ]
   };
-   await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
+    
 
     res.json({ success: true, message: "OTP sent successfully" });
   } catch (error) {
@@ -51,9 +62,19 @@ routes.post("/sendotp", async (req, res) => {
   }
 });
 
+// update password api
 
+routes.put('/changepassword', fetchuser, async (req, res) => {
+  const salt = await bcrypt.genSalt(10);
+  const secnewpass = await bcrypt.hash(req.body.newpassword, salt)
+  User.findByIdAndUpdate(req.user.id, { password: secnewpass })  
+ if (err) {
+      return res.status(500).json({ message: "Failed to change password" });
+    }
 
-
+    return res.status(200).json({ message: "Password changed successfully" });
+  }); 
+  
 
 
 
@@ -68,10 +89,7 @@ routes.post('/createuser', [
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     } 
-  try {
-    
-
-      
+  try {  
     let user= await  User.findOne({email : req.body.email});
     if(user){
       return res.status(400).json({success ,  errors: "Sorry a  user With email already Exist" });
@@ -94,7 +112,7 @@ routes.post('/createuser', [
         name: req.body.name,
         email: req.body.email,
         password: secPass,
-        profile: "",
+        profile: localStorage.getItem("profile"),
       })
 
     //   .then(user => res.json(user))

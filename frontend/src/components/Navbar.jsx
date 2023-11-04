@@ -104,6 +104,10 @@ export default function Navbar() {
                             <h3>hello</h3>
                             
                             <h3>hello</h3>
+                            <div class="input-group flex-nowrap">
+                                <input type="password" class="form-control" placeholder="contraseña" id="password-input" aria-label="password input" aria-describedby="password-input" />
+                                <span class="input-group-text" id="password-input">@</span>
+                            </div>
                             <button type="button" className="btn btn-primary" >Change Password</button>
                             
                             

@@ -27,10 +27,11 @@ const response = await fetch(
       password: credentials.password,
       profile:localStorage.getItem("profile"),
       otp:credentials.otp 
-    }), // body data type must match "Content-Type" header
+    }),
   }
-);
-const json =  await response.json(); 
+  );
+  const json =  await response.json(); 
+  console.log(json);// body data type must match "Content-Type" header
 if(json.success){
     localStorage.setItem("token" , json.token)
   history.push('/')
@@ -44,20 +45,49 @@ else {
 
     }
 
+
+    // handle change function
+
   } 
   const handlechange = (e) => {
     setCredentials({...credentials , [e.target.name] : e.target.value})
 
   }
+
+  // show hide button
   const handleShow = () => {
     setShow(!show)
   
   }
 
+
+
   const openotpmodal = useRef()
   const closeotpmodal = useRef()
   const handleSendOTP = async () => {
     openotpmodal.current.click();
+    setIsloadingotp(true)
+    const response = await fetch("https://anis-drive-app.onrender.com/api/auth/sendotp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: credentials.email }),
+    });
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
+      setIsloadingotp(false)
+    } else {
+      alert("Invaild Email ID");
+      setIsloadingotp(false)
+    }
+  };
+
+  // for resend otp button 
+   
+  const handleReSendOTP = async () => {
+    // openotpmodal.current.click();
     setIsloadingotp(true)
     const response = await fetch("https://anis-drive-app.onrender.com/api/auth/sendotp", {
       method: "POST",
@@ -182,11 +212,11 @@ else {
               <div className="mb-3">
                 
                 {isloadingotp ? (<div style={{ display: 'flex', flexDirection:"column" ,justifyContent: 'center', alignItems: 'center' }}>
-                  <p>Sending OTP to your GMAIL</p><div className="spinner-border" role="status">
+                  <p>Sending OTP to <b style={{color:"green"}}>{credentials.email}</b></p><div className="spinner-border" role="status">
                     <span className="visually-hidden">Loading...</span>
                   </div>
                 </div> ):( <div>
-                  <p>OTP Send Successfully</p>
+                    <p>OTP Send Successfully to <b style={{ color: "green" }}>{credentials.email}</b></p>
                 </div>) }
                 <label htmlFor="exampleInputusername" className="form-label" >Enter OTP</label>
               <input
@@ -196,7 +226,9 @@ else {
                 value={credentials.otp}
                 onChange={handlechange}
                 className="form-control" id="otp" aria-describedby="otphelp"
-              />
+                />
+                <p style={{color:"gray"}}>Haven't Recieved OTP Try Again</p>
+                <p className='btn btn-primary' onClick={handleReSendOTP}>Resend</p>
               </div>
 
 
@@ -204,7 +236,7 @@ else {
             </div>
             <div class="modal-footer">
               <button type="button" ref={closeotpmodal} class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button onClick={handlesubmit} type="submit" disabled={isloading} className="btn btn-primary">{isloading ? <div className="d-flex justify-content-center">
+              <button onClick={handlesubmit} type="submit" disabled={isloading || credentials.otp.length < 6} className="btn btn-primary">{isloading ? <div className="d-flex justify-content-center">
                 <div className="spinner-border" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </div>
