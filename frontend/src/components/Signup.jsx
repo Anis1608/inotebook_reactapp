@@ -8,7 +8,7 @@ function Signup() {
   const [isloading, setIsloading] = useState(false)
   const [isloadingotp, setIsloadingotp] = useState(false)
   const [isloadingimg, setIsloadingimg] = useState(false)
-  const [credentials, setCredentials] = useState({ name: "", email: "", password: "", profile: localStorage.getItem("profile"), otp: "" })
+  const [credentials, setCredentials] = useState({ name: "", email: "", password: "", profile: "", otp: "" })
   let history  = useHistory();
   const handlesubmit = async (e) => {
     e.preventDefault();

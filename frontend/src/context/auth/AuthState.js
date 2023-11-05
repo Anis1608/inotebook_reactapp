@@ -7,8 +7,8 @@ const AuthState = (props) => {
   const [credentials, setCredentials] = useState(credentialsinitial);
 
    const getUser = async () => {
-     const response = await fetch("http://localhost:5000/api/auth/getuser", {
-       method: "GET",
+     const response = await fetch("https://anis-drive-app.onrender.com/api/auth/getuser", {
+       method: "POST",
        headers: {
          "Content-Type": "application/json",
          authToken: localStorage.getItem("token"),
@@ -54,4 +54,4 @@ const AuthState = (props) => {
     );
 
 }
-export default AuthState;
+export default AuthState;

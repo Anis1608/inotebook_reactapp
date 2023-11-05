@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import "./css/Navbar.css"
 import { useState } from 'react'
 import { Link , useHistory } from 'react-router-dom'
 import { useRef } from 'react'
+import authContext from '../context/auth/authcontext'
 
 export default function Navbar() {
+
+    const { credentials, getUser } = useContext(authContext);;
+    
+    useEffect(() => {
+        getUser()
+    }, [])
+    
+
     const [navbar, setNavbar] = useState(true)
     let history = useHistory();
     const handlelogout =()=>{
@@ -99,11 +108,10 @@ export default function Navbar() {
 
                         </div>
                         <div className="modal-body d-flex flex-column" style={{ justifyContent: "center", alignItems:"center"}}>
-                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" className="rounded-circle" style={{ width: "150px" }}
+                            <img src={credentials.profile} className="rounded-circle" style={{ width: "150px" }}
                                 alt="Avatar" />
-                            <h3>hello</h3>
-                            
-                            <h3>hello</h3>
+                            <h3>{ credentials.email}</h3>
+                            <h3>{ credentials.name}</h3>
                             <div class="input-group flex-nowrap">
                                 <input type="password" class="form-control" placeholder="contraseña" id="password-input" aria-label="password input" aria-describedby="password-input" />
                                 <span class="input-group-text" id="password-input">@</span>

@@ -8,11 +8,13 @@ import Video from './components/Video';
 import {BrowserRouter as Router,Switch,Route,} from "react-router-dom";
 import Images from './components/Images';
 import Pdfcollection from './components/Pdfcollection'; 
+import AuthState from './context/auth/AuthState';
 
 function App() {
   return (
     <>
       {/* <ImageUpload/> */}
+      <AuthState>
     <NoteState>
     <Router>
     <Navbar/>
@@ -41,6 +43,7 @@ function App() {
       </Switch>
     </Router>
     </NoteState>
+    </AuthState>
     </>
 
   );
