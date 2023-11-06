@@ -86,6 +86,12 @@ export default function Navbar() {
             }
         );
         const json = await response.json();
+        if (json.success) {
+            alert("Password Chnaged Successfully")
+
+        } else {
+            alert("Something Went Wrong");
+        }
     }
 
 
@@ -145,8 +151,8 @@ export default function Navbar() {
                         </li>
                     </ul>
                    {!localStorage.getItem("token") ? <form className="d-flex">
-                        <Link to="/login" className="btn btn-primary mx-2" role="button" aria-disabled="true">Login</Link>
-                        <Link to="/signup" className="btn btn-primary mx-2"  role="button" aria-disabled="true">Signup</Link> 
+                            <Link to="/login" className="btn btn-primary mx-2" onClick={handlenavbar} role="button" aria-disabled="true">Login</Link>
+                            <Link to="/signup" className="btn btn-primary mx-2" onClick={handlenavbar}  role="button" aria-disabled="true">Signup</Link> 
                         </form> : <div>
                                 
                                 <img src={credentials.profile} className="rounded-circle" style={{ width: "50px" }}
