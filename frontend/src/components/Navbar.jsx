@@ -86,10 +86,7 @@ export default function Navbar() {
             }
         );
         const json = await response.json();
-        if (json.success) {
-            alert("Password Changed Successfully")
-
-        }
+        alert("Password Changed Successfully")
     }
 
 
