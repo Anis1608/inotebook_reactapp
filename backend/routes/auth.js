@@ -32,7 +32,7 @@ let sharedOTP = "";
 routes.post("/sendotp", async (req, res) => {
   const email = req.body.email;
   const otp = generateRandom6DigitNumber().toString()
-  // console.log(otp);
+  console.log(otp);
     sharedOTP = otp;
   try {
     // Send the OTP to the user's email
@@ -63,15 +63,16 @@ routes.post("/sendotp", async (req, res) => {
 });
 
 // update password api
-let changepasswordotp  = ''
-routes.put('/changepassword', fetchuser, async (req, res) => {
+console.log( sharedOTP + "sharedotp")
+routes.post('/changepassword', fetchuser, async (req, res) => {
   try {
-    const email = req.body.email;
-      const providedOTPtochnagepassword = req.body.otp;
+    // const email = req.body.email;
+    const providedOTPtochnagepassword = req.body.otp;
+    console.log("providedOTPtochnagepassword" + providedOTPtochnagepassword)
 
       //  (matching the one sent)
-    const otppass = changepasswordotp;
-    // console.log(sharedOTP);
+    const otppass = sharedOTP
+    console.log(otppass + "otppass");
 
       if (providedOTPtochnagepassword !== otppass) {
         return res.status(400).json({ success, message: "Invalid OTP" });
@@ -79,9 +80,7 @@ routes.put('/changepassword', fetchuser, async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const secnewpass = await bcrypt.hash(req.body.newpassword, salt);
-
     await User.findByIdAndUpdate(req.user.id, { password: secnewpass });
-
     return res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {
     return res.status(500).json({ message: "Failed to change password" });

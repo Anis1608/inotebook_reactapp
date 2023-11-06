@@ -11,7 +11,7 @@ const AuthState = (props) => {
        method: "POST",
        headers: {
          "Content-Type": "application/json",
-         authToken: localStorage.getItem("token"),
+         token: localStorage.getItem("token"),
        },
      });
      const json = await response.json();

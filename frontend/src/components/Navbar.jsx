@@ -6,6 +6,16 @@ import { useRef } from 'react'
 import authContext from '../context/auth/authcontext'
 
 export default function Navbar() {
+    const [input, setInput] = useState({ newpassword: "", otp: "" })
+    const handlechange = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value })
+
+    }
+
+
+    const [Isloadingpass, setIsloadingpass] = useState(false)
+    const [sendotpbutton, setSendotpbutton ] = useState(false)
+    const [show, setShow] = useState(false)
 
     const { credentials, getUser } = useContext(authContext);;
     
@@ -20,6 +30,11 @@ export default function Navbar() {
         localStorage.removeItem("token")
         history.push("/login") 
         refclosemodal.current.click();
+    }
+
+    // for show and hide password
+    const handleshowpass = () => {
+        setShow(!show)
     }
 
 
@@ -49,7 +64,59 @@ export default function Navbar() {
     const handleSetActivehome =  (home) => {
         setActive(home)
     }
-    
+
+
+    // for password changing purpose
+
+    const handlechangepassword = async (e) => {
+        e.preventDefault();
+        setIsloadingpass(true)
+        const response = await fetch(
+            "https://anis-drive-app.onrender.com/api/auth/changepassword",
+            {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    "Content-Type": "application/json",
+                    token: localStorage.getItem("token")
+                },
+                body: JSON.stringify({
+                    newpassword: input.newpassword,
+                    otp: input.otp,
+                }), // body data type must match "Content-Type" header
+            }
+        );
+        const json = await response.json();
+    }
+
+
+    // sending otp
+
+    const handleSendOTP = async () => {
+        setSendotpbutton(true)
+        const response = await fetch("https://anis-drive-app.onrender.com/api/auth/sendotp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: credentials.email }),
+        });
+        const data = await response.json();
+        console.log(data);
+        if (data.success) { 
+            setSendotpbutton(false)
+
+        } else {
+            alert("Invaild Email ID");
+        }
+    };
+
+    const handleopeninput = () => {
+        setIsloadingpass(true)
+    }
+
+
+
+
     return (
         <>
        
@@ -82,7 +149,7 @@ export default function Navbar() {
                         <Link to="/signup" className="btn btn-primary mx-2"  role="button" aria-disabled="true">Signup</Link> 
                         </form> : <div>
                                 
-                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" className="rounded-circle" style={{ width: "50px"}}
+                                <img src={credentials.profile} className="rounded-circle" style={{ width: "50px" }}
                                     alt="Avatar" onClick={openmodal} />
                         </div>
                         }
@@ -108,15 +175,39 @@ export default function Navbar() {
 
                         </div>
                         <div className="modal-body d-flex flex-column" style={{ justifyContent: "center", alignItems:"center"}}>
-                            <img src={credentials.profile} className="rounded-circle" style={{ width: "150px" }}
+                            <img src={credentials.profile} className="rounded-circle" style={{ maxWidth: "150px", maxHeight: "150px" }}
                                 alt="Avatar" />
-                            <h3>{ credentials.email}</h3>
-                            <h3>{ credentials.name}</h3>
+                            <h5>{credentials.email}</h5>
+                            <h5>{credentials.name}</h5>
                             <div class="input-group flex-nowrap">
-                                <input type="password" class="form-control" placeholder="contraseña" id="password-input" aria-label="password input" aria-describedby="password-input" />
-                                <span class="input-group-text" id="password-input">@</span>
+                                <input type={show ? "text" : "password"} class="form-control" placeholder="New Password" id="newpassword" name='newpassword' aria-label="password input" onChange={handlechange} aria-describedby="password-input" />
+                                <span class="input-group-text" id="password-input" onClick={handleshowpass}>{show ? "Hide" : "Show"}</span>
                             </div>
-                            <button type="button" className="btn btn-primary" >Change Password</button>
+                            <br />
+                            {
+                                Isloadingpass ? (
+
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control d-none" value={credentials.email} id="email-input" aria-label="email input" aria-describedby="email-input" />
+                                        <input type="number" class="form-control" placeholder="Enter OTP" id="otp" name='otp' aria-label="otp" aria-describedby="otp" onChange={handlechange} />
+                                        <span class="input-group-text" id="otp" onClick={handleSendOTP}>{ sendotpbutton ? "Sending..." :"Send OTP"}</span>
+
+                                        <div>
+                                        </div>
+                                    </div>
+
+
+
+                                )
+                                    : ("")}
+                            <br />
+                            {
+                                Isloadingpass ? (<button type="button" disabled={input.newpassword.length < 5 || input.otp.length < 6} className="btn btn-primary" onClick={handlechangepassword}>Change Password</button>
+                                ) : (
+                                    <button type="button" className="btn btn-primary" onClick={handleopeninput}>Change Password</button>
+                                )
+                            }
                             
                             
                         </div>
