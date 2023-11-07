@@ -85,7 +85,7 @@ export default function Navbar() {
                     otp: input.otp,
                 }), // body data type must match "Content-Type" header
             }
-        );
+        ); 
         const json = await response.json();
         alert("Password Changed Successfully")
     }

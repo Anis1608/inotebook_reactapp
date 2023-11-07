@@ -91,7 +91,7 @@ function Login() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                forgotemail: credentials.forgotemail,
+                email: credentials.forgotemail,
                 newpassword: credentials.newpassword,
                 otp: credentials.otp
             }),
