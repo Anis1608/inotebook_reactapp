@@ -30,6 +30,7 @@ export default function Navbar() {
         localStorage.removeItem("token")
         history.push("/login") 
         refclosemodal.current.click();
+        window.location.reload()
     }
 
     // for show and hide password

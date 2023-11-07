@@ -175,7 +175,9 @@ const AddNote = () => {
               value={note.description}
             ></textarea>
             <br />
+
             <br />
+
             <input
               type="text"
               name="tag"
@@ -186,7 +188,7 @@ const AddNote = () => {
               value={note.tag}
             />
             <br />
-            <br />
+            <label style={{ marginLeft: "20px", color: "red", marginTop: "5px" }} htmlFor="video">Add Image</label><br />
             <input
               type="file"
               name="images"
@@ -195,7 +197,9 @@ const AddNote = () => {
               accept="image/*"
               onChange={(e) => postDetails(e.target.files[0])}
             /> <br />
-            <br />
+          
+            <label style={{ marginLeft: "20px", color: "red", marginTop: "5px" }} htmlFor="video">Add PDF</label><br />
+
             <input
               type="file"
               name="pdf"
@@ -205,11 +209,12 @@ const AddNote = () => {
               onChange={(e) => postPDF(e.target.files[0])}
             />
             <br />
-            <br />
+            <label style={{ marginLeft: "20px", color:"red" ,  marginTop: "5px"}} htmlFor="video">Add Video</label><br />
             <input
               type="file"
               name="video"
               id="video"
+              
               className="contact-background"
               accept="video/*"
               onChange={(e) => postVideo(e.target.files[0])}

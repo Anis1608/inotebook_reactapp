@@ -23,6 +23,7 @@ function generateRandom6DigitNumber() {
   const min = 100000; // Smallest 6-digit number
   const max = 999999; // Largest 6-digit number
   const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  // console.log(randomNumber)
   return randomNumber;
 }
 
@@ -32,7 +33,7 @@ let sharedOTP = "";
 routes.post("/sendotp", async (req, res) => {
   const email = req.body.email;
   const otp = generateRandom6DigitNumber().toString()
-  console.log(otp);
+  // console.log(otp);
     sharedOTP = otp;
   try {
     // Send the OTP to the user's email
@@ -62,18 +63,19 @@ routes.post("/sendotp", async (req, res) => {
   }
 });
 
+
+
+
 // update password api
-console.log( sharedOTP + "sharedotp")
+// console.log( sharedOTP + "sharedotp")
 routes.post('/changepassword', fetchuser, async (req, res) => {
   try {
     // const email = req.body.email;
     const providedOTPtochnagepassword = req.body.otp;
-    console.log("providedOTPtochnagepassword" + providedOTPtochnagepassword)
-
+ 
       //  (matching the one sent)
     const otppass = sharedOTP
-    console.log(otppass + "otppass");
-
+    // console.log(otppass + "otppass");
       if (providedOTPtochnagepassword !== otppass) {
         return res.status(400).json({ success, message: "Invalid OTP" });
       }
@@ -84,6 +86,37 @@ routes.post('/changepassword', fetchuser, async (req, res) => {
     return res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {
     return res.status(500).json({ message: "Failed to change password" });
+  }
+});
+
+
+//  forgot password
+
+routes.post('/forgotpassword', async (req, res) => {
+try {
+    const email = req.body.email;
+    const providedOTP = req.body.otp;
+    const newPassword = req.body.newpassword;
+
+    // Fetch the stored OTP from your server (e.g., from the in-memory object or database)
+    
+const otppass = sharedOTP
+
+  if (providedOTP !== otppass) {
+      return res.status(400).json({ message: 'Invalid OTP' });
+    }
+
+    // Hash the new password and update it in the database
+    const salt = await bcrypt.genSalt(10);
+    const secnewpass = await bcrypt.hash(newPassword, salt);
+
+    await User.findOneAndUpdate({ email }, { password: secnewpass });
+
+    // Remove the used OTP from your server
+
+    return res.status(200).json({ message: 'Password changed successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to change password' });
   }
 });
 
