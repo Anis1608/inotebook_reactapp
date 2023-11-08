@@ -112,19 +112,17 @@ function Login() {
                     <label htmlFor="exampleInputEmail1" className="form-label" >Email address</label>
                     <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={handlechange} />
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                </div>
-                <div className="mb-3">
+                    </div>
+
+
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type={show ? "text" : "password"} name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
-                        <div id="passwordHelp" style={{color:"blue", marginLeft:"15px" , cursor:"pointer"  , fontSize:"15px"}} onClick={handleopenmodal} className="form-text">Forgot Password Reset</div>
-                        
-                </div>
-                    <div className='mb-3'>
-                        <p className='btn' style={{border:"2px solid"}} onClick={handleShow} >{ show ? "Hide Password" : "Show Password"}</p>
-                
-                       
-                        </div>
-                    <button type="submit" disabled={isloading} className="btn btn-primary">{isloading ? <div className="d-flex justify-content-center">
+                    <div class="input-group flex-nowrap">
+                        <input type={show ? "text" : "password"} class="form-control" id="exampleInputPassword1" name='password' aria-label="password input" onChange={handlechange} aria-describedby="password-input" />
+                        <span class="input-group-text" id="password-input" onClick={handleShow}>{show ? "Hide" : "Show"}</span>
+                    </div>
+                        <div id="passwordHelp" style={{color:"blue", marginLeft:"3px" , cursor:"pointer"  , fontSize:"15px"}} onClick={handleopenmodal} className="form-text">Forgot Password Reset</div>
+                    
+                    <button type="submit" disabled={isloading} className="btn btn-primary mt-3">{isloading ? <div className="d-flex justify-content-center">
                         <div className="spinner-border" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </div>

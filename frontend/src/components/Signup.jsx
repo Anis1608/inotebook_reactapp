@@ -159,15 +159,22 @@ else {
                     <label htmlFor="exampleInputEmail1" className="form-label" >Email address</label>
                     <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={handlechange} />
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-            <input type={show ? "text" : "password"} name='password' className="form-control" id="exampleInputPassword1" onChange={handlechange} />
           </div>
-          <div className='mb-3'>
-            <p className='btn' style={{ border: "2px solid" }} onClick={handleShow} >{show ? "Hide Password" : "Show Password"}</p>
+          
+
+
+               
+            <label htmlFor="exampleInputPassword1" className="form-label">Password</label>          
+          <div class="input-group flex-nowrap">
+            <input type={show ? "text" : "password"} class="form-control" id="exampleInputPassword1" name='password' aria-label="password input" onChange={handlechange} aria-describedby="password-input" />
+            <span class="input-group-text" id="password-input" onClick={handleShow}>{show ? "Hide" : "Show"}</span>
           </div>
-                <div className="mb-3">
+
+
+
+
+         
+                <div className="mb-3 mt-3">
                     <label htmlFor="exampleInputprofile" className="form-label">Profile pic</label>
             <input type='file' name='file' accept='image/*' className="form-control" id="exampleInputprofile" onChange={(e) => {
               postDetails(e.target.files[0])
